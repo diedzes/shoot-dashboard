@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shoot Music NL/BE Dashboard
 
-## Getting Started
+Dashboard voor Shoot Music NL/BE waarmee je in een oogopslag ziet:
+- Wie welk pakket heeft ontvangen (contact + organisatie + e-mail)
+- Of er gereageerd is
+- Eventuele quotes
+- Tracklists per pakket
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Installeer dependencies:
+   ```bash
+   npm install
+   ```
+2. Zet de environment variables (zie hieronder).
+3. Start de dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open `http://localhost:3000`.
+
+## Environment variables
+
+Maak een `.env.local` aan:
+
+```
+SHEET_ID=1qXL9woeFlsGmOhuRFDzXC3Ue_rnboG9s3khYjdJFOqM
+GOOGLE_SHEETS_CLIENT_EMAIL=...
+GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+BASIC_AUTH_PASSWORD=your-password
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Optioneel (handig bij CSV fallback):
+```
+CONTACTS_SHEET_NAME=Contacten
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Optioneel (packages tab naam, default is `Package`):
+```
+PACKAGES_SHEET_NAME=Package
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Optioneel (quotes tab naam, default is `Quotes`):
+```
+QUOTES_SHEET_NAME=Quotes
+```
 
-## Learn More
+Optioneel (voor basic auth gebruikersnaam, default is `admin`):
+```
+BASIC_AUTH_USERNAME=admin
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Service account (aanbevolen)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Maak een Google Cloud service account aan.
+2. Activeer de Google Sheets API.
+3. Download het service-account JSON en zet het e-mailadres in `GOOGLE_SHEETS_CLIENT_EMAIL`.
+4. Zet de private key in `GOOGLE_SHEETS_PRIVATE_KEY` (let op de `\n` line breaks).
+5. Deel de sheet met het service-account e-mailadres (leesrechten zijn genoeg).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## CSV fallback
 
-## Deploy on Vercel
+Als er geen service-account env vars beschikbaar zijn, gebruikt de app een "published as CSV"
+fallback. Publiceer de sheet in Google Sheets via:
+`Bestand` → `Delen` → `Publiceren op internet`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Let op: zonder API-toegang kunnen tabs niet altijd automatisch gedetecteerd worden. Zet in
+dat geval `CONTACTS_SHEET_NAME` om de juiste tab te kiezen.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Packages / tabs herkenning
+
+- Package kolommen worden herkend als kolomnaam die matcht met `/^\d{2}$/`.
+- Package tabs worden herkend via tabs met dezelfde naam (bijv. `01`, `02`).
+- Alle gevonden IDs worden gecombineerd in de filterlijst.
+
+## Packages tab (labels)
+
+Voeg optioneel een tab `Package` toe met kolommen:
+
+```
+PACKAGE_ID,PACKAGE_LABEL
+```
+
+Deze labels worden overal in de UI gebruikt.
+
+## Quotes tab (meerdere quotes per contact)
+
+Optioneel kun je een extra tab `Quotes` toevoegen met deze kolommen:
+
+```
+CONTACT,QUOTE_DATE,PACKAGE_ID,QUOTE_TEXT
+```
+
+- `QUOTE_DATE` bepaalt welke quote als "nieuwste" in de hoofdtabel verschijnt.
+- `PACKAGE_ID` (bijv. `01`) koppelt een quote aan een specifiek pakket.
+
+## Data health
+
+Aanbevolen extra kolommen om later automatisch response-meting te doen:
+- `date_sent`
+- `gmail_thread_id`
+- `message_id`
+
+## Scripts
+
+- `npm run dev` start de dev server
+- `npm run build` maakt een production build
+- `npm run start` start de production server
