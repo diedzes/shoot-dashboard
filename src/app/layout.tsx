@@ -33,12 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl">
-      <body
-        className={`${roboto.variable} ${headingDisplay.variable} ${geistMono.variable}`}
-      >
-        {children}
-      </body>
+    <html
+      lang="nl"
+      className={`${roboto.variable} ${headingDisplay.variable} ${geistMono.variable}`}
+    >
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }
