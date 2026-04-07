@@ -44,19 +44,19 @@ export default async function PackagePage({ params }: PackagePageProps) {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-16 px-6 py-16 md:gap-24 md:py-24">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-base leading-[1.5] text-muted-foreground">Package detail</p>
+            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-muted-foreground">PACKAGE DETAIL</p>
             <h1 className="[font-family:var(--font-heading-display)] text-4xl font-extrabold uppercase tracking-wide md:text-5xl">
               Package {getPackageLabel(packageLabels, packageId)}
             </h1>
           </div>
           <Button asChild>
-            <Link href="/">Back to dashboard</Link>
+            <Link href="/">BACK TO DASHBOARD</Link>
           </Button>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Tracklist</CardTitle>
+            <CardTitle>TRACKLIST</CardTitle>
           </CardHeader>
           <CardContent>
             <TracklistTable tracklist={tracklist} />
@@ -65,7 +65,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recipients</CardTitle>
+            <CardTitle>RECIPIENTS</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border">
