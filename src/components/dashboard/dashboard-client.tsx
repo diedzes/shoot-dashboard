@@ -169,10 +169,10 @@ export const DashboardClient = ({
   }, [packageFilter]);
 
   return (
-    <div className="space-y-16 md:space-y-24">
-      <section className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-8">
-          <h1 className="[font-family:var(--font-heading-display)] max-w-xl text-4xl font-extrabold uppercase tracking-wide md:text-5xl">
+    <div className="space-y-8">
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="font-heading max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
             Shoot Music NL/BE Dashboard
           </h1>
           <div className="flex items-center gap-4">
@@ -188,18 +188,18 @@ export const DashboardClient = ({
             />
           </div>
         </div>
-        <p className="max-w-2xl text-base leading-[1.5] text-muted-foreground">
+        <p className="text-muted-foreground">
           Overview of sent music packages, responses, and quotes.
         </p>
       </section>
 
       <Card>
         <CardHeader>
-          <CardTitle>FILTERS</CardTitle>
+          <CardTitle>Filters</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+        <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-2">
-            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-foreground">PACKAGE</p>
+            <p className="text-sm font-medium">Package</p>
             <Select value={packageFilter} onValueChange={setPackageFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="All packages" />
@@ -215,7 +215,7 @@ export const DashboardClient = ({
             </Select>
           </div>
           <div className="space-y-2">
-            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-foreground">ORGANIZATION TYPE</p>
+            <p className="text-sm font-medium">Organization type</p>
             <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="All types" />
@@ -231,7 +231,7 @@ export const DashboardClient = ({
             </Select>
           </div>
           <div className="space-y-2">
-            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-foreground">RESPONSE STATUS</p>
+            <p className="text-sm font-medium">Response status</p>
             <Select value={responseFilter} onValueChange={setResponseFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="All" />
@@ -249,12 +249,12 @@ export const DashboardClient = ({
               onCheckedChange={setQuoteOnly}
               id="quote-only"
             />
-            <label htmlFor="quote-only" className="font-heading text-xs font-extrabold uppercase tracking-wide text-foreground">
-              QUOTES ONLY
+            <label htmlFor="quote-only" className="text-sm font-medium">
+              Quotes only
             </label>
           </div>
           <div className="space-y-2">
-            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-foreground">SEARCH</p>
+            <p className="text-sm font-medium">Search</p>
             <Input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -267,7 +267,7 @@ export const DashboardClient = ({
       {packageFilter !== "all" && (
         <Card>
           <CardHeader>
-            <CardTitle>PACKAGE CONTENT</CardTitle>
+            <CardTitle>Package content</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
@@ -282,44 +282,44 @@ export const DashboardClient = ({
         </Card>
       )}
 
-      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader>
-            <CardTitle>TOTAL CONTACTS</CardTitle>
+            <CardTitle>Total contacts</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-foreground">{totals.total}</p>
+            <p className="text-3xl font-semibold">{totals.total}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>PACKAGES SENT</CardTitle>
+            <CardTitle>Packages sent</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-foreground">{totals.withPackages}</p>
+            <p className="text-3xl font-semibold">{totals.withPackages}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>RESPONDED</CardTitle>
+            <CardTitle>Responded</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-foreground">{totals.responded}</p>
+            <p className="text-3xl font-semibold">{totals.responded}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>RESPONSE RATE</CardTitle>
+            <CardTitle>Response rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-foreground">{totals.responseRate}%</p>
+            <p className="text-3xl font-semibold">{totals.responseRate}%</p>
           </CardContent>
         </Card>
       </section>
 
       <Card>
         <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <CardTitle>CONTACTS</CardTitle>
+          <CardTitle>Contacts</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="rounded-lg border">
@@ -349,7 +349,7 @@ export const DashboardClient = ({
                               key={id}
                               type="button"
                               onClick={() => openDialog(contact)}
-                              className="text-base font-medium text-primary underline underline-offset-2"
+                              className="text-sm underline"
                             >
                               {getPackageLabel(packageLabels, id)}
                             </button>
@@ -363,7 +363,7 @@ export const DashboardClient = ({
                       {contact.responded === null ? (
                         "—"
                       ) : (
-                        <Badge variant={contact.responded ? "default" : "outline"}>
+                        <Badge variant={contact.responded ? "default" : "secondary"}>
                           {contact.responded ? "Yes" : "No"}
                         </Badge>
                       )}
@@ -372,7 +372,7 @@ export const DashboardClient = ({
                       <QuoteCell quote={contact.quote} />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" onClick={() => openDialog(contact)}>
+                      <Button variant="ghost" size="sm" onClick={() => openDialog(contact)}>
                         Details
                       </Button>
                     </TableCell>
@@ -495,7 +495,7 @@ export const DashboardClient = ({
 
 const QuoteCell = ({ quote }: { quote: string | null }) => {
   if (!quote) {
-    return <span className="text-base leading-[1.5] text-muted-foreground">—</span>;
+    return <span className="text-sm text-muted-foreground">—</span>;
   }
-  return <span className="text-base leading-[1.5] whitespace-pre-wrap">{quote}</span>;
+  return <span className="text-sm whitespace-pre-wrap">{quote}</span>;
 };

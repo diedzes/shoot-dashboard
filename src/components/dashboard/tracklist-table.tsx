@@ -10,11 +10,11 @@ const renderFallbackRow = (row: string[]) =>
 
 export const TracklistTable = ({ tracklist }: TracklistTableProps) => {
   if (!tracklist.available) {
-    return <p className="text-base leading-[1.5] text-muted-foreground">Not available.</p>;
+    return <p className="text-sm text-muted-foreground">Not available.</p>;
   }
 
   if (!tracklist.rows.length) {
-    return <p className="text-base leading-[1.5] text-muted-foreground">No tracks found.</p>;
+    return <p className="text-sm text-muted-foreground">No tracks found.</p>;
   }
 
   const headers = tracklist.headers;
@@ -22,7 +22,7 @@ export const TracklistTable = ({ tracklist }: TracklistTableProps) => {
     return (
       <div className="space-y-2">
         {tracklist.rows.map((row, index) => (
-          <p key={`${tracklist.packageId}-${index}`} className="text-base leading-[1.5]">
+          <p key={`${tracklist.packageId}-${index}`} className="text-sm">
             {renderFallbackRow(row)}
           </p>
         ))}

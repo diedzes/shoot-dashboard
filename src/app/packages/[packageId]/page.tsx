@@ -34,30 +34,29 @@ export default async function PackagePage({ params }: PackagePageProps) {
   const { packageId } = params;
   const { contacts, packageLabels } = await getContactsData();
   const tracklist = await getPackageTracklist(packageId);
-  const deployCommit = process.env.VERCEL_GIT_COMMIT_SHA;
 
   const recipients = contacts.filter((contact) =>
     contact.packagesSent.includes(packageId)
   );
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-16 px-6 py-16 md:gap-24 md:py-24">
+    <main className="min-h-screen bg-muted/40">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="font-heading text-xs font-extrabold uppercase tracking-wide text-muted-foreground">PACKAGE DETAIL</p>
-            <h1 className="[font-family:var(--font-heading-display)] text-4xl font-extrabold uppercase tracking-wide md:text-5xl">
+            <p className="text-sm text-muted-foreground">Package detail</p>
+            <h1 className="font-heading text-3xl font-semibold tracking-tight md:text-4xl">
               Package {getPackageLabel(packageLabels, packageId)}
             </h1>
           </div>
-          <Button asChild>
-            <Link href="/">BACK TO DASHBOARD</Link>
+          <Button asChild variant="outline">
+            <Link href="/">Back to dashboard</Link>
           </Button>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>TRACKLIST</CardTitle>
+            <CardTitle>Tracklist</CardTitle>
           </CardHeader>
           <CardContent>
             <TracklistTable tracklist={tracklist} />
@@ -66,7 +65,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>RECIPIENTS</CardTitle>
+            <CardTitle>Recipients</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border">
@@ -109,11 +108,6 @@ export default async function PackagePage({ params }: PackagePageProps) {
           </CardContent>
         </Card>
 
-        {deployCommit ? (
-          <p className="text-center text-xs leading-[1.5] text-muted-foreground">
-            Build {deployCommit.slice(0, 7)}
-          </p>
-        ) : null}
       </div>
     </main>
   );
