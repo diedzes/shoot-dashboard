@@ -34,6 +34,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
   const { packageId } = params;
   const { contacts, packageLabels } = await getContactsData();
   const tracklist = await getPackageTracklist(packageId);
+  const deployCommit = process.env.VERCEL_GIT_COMMIT_SHA;
 
   const recipients = contacts.filter((contact) =>
     contact.packagesSent.includes(packageId)
@@ -107,6 +108,12 @@ export default async function PackagePage({ params }: PackagePageProps) {
             )}
           </CardContent>
         </Card>
+
+        {deployCommit ? (
+          <p className="text-center text-xs leading-[1.5] text-muted-foreground">
+            Build {deployCommit.slice(0, 7)}
+          </p>
+        ) : null}
       </div>
     </main>
   );

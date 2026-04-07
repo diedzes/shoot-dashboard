@@ -5,6 +5,7 @@ export const revalidate = 300;
 
 export default async function Home() {
   const { contacts, packageIds, packageLabels, types } = await getContactsData();
+  const deployCommit = process.env.VERCEL_GIT_COMMIT_SHA;
 
   return (
     <main className="min-h-screen bg-background">
@@ -15,6 +16,11 @@ export default async function Home() {
           packageLabels={packageLabels}
           types={types}
         />
+        {deployCommit ? (
+          <p className="text-center text-xs leading-[1.5] text-muted-foreground">
+            Build {deployCommit.slice(0, 7)}
+          </p>
+        ) : null}
       </div>
     </main>
   );
