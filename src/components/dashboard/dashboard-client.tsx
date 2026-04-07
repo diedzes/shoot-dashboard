@@ -172,7 +172,7 @@ export const DashboardClient = ({
     <div className="space-y-16 md:space-y-24">
       <section className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-8">
-          <h1 className="font-heading max-w-xl text-3xl font-extrabold uppercase tracking-wide md:text-4xl">
+          <h1 className="[font-family:var(--font-heading-display)] max-w-xl text-4xl font-extrabold uppercase tracking-wide md:text-5xl">
             Shoot Music NL/BE Dashboard
           </h1>
           <div className="flex items-center gap-4">
@@ -372,7 +372,7 @@ export const DashboardClient = ({
                       <QuoteCell quote={contact.quote} />
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" onClick={() => openDialog(contact)}>
+                      <Button size="sm" onClick={() => openDialog(contact)}>
                         Details
                       </Button>
                     </TableCell>

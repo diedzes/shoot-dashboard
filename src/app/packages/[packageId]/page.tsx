@@ -45,11 +45,11 @@ export default async function PackagePage({ params }: PackagePageProps) {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-base leading-[1.5] text-muted-foreground">Package detail</p>
-            <h1 className="font-heading text-3xl font-extrabold uppercase tracking-wide md:text-4xl">
+            <h1 className="[font-family:var(--font-heading-display)] text-4xl font-extrabold uppercase tracking-wide md:text-5xl">
               Package {getPackageLabel(packageLabels, packageId)}
             </h1>
           </div>
-          <Button asChild variant="outline">
+          <Button asChild>
             <Link href="/">Back to dashboard</Link>
           </Button>
         </div>
