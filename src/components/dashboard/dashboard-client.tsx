@@ -351,7 +351,7 @@ export const DashboardClient = ({
                               onClick={() => openDialog(contact)}
                               className="text-sm underline"
                             >
-                              {getPackageLabel(packageLabels, id)}
+                              {id}
                             </button>
                           ))}
                         </div>
