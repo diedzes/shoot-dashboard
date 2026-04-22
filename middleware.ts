@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const MAINTENANCE_MODE = true;
 const BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME || "admin";
 const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD;
 
@@ -11,7 +12,20 @@ const unauthorizedResponse = () =>
     },
   });
 
+const maintenanceResponse = () =>
+  new NextResponse("Temporarily offline for maintenance.", {
+    status: 503,
+    headers: {
+      "Retry-After": "3600",
+      "Cache-Control": "no-store",
+    },
+  });
+
 export function middleware(request: NextRequest) {
+  if (MAINTENANCE_MODE) {
+    return maintenanceResponse();
+  }
+
   if (!BASIC_AUTH_PASSWORD) {
     return new NextResponse("BASIC_AUTH_PASSWORD is not set.", { status: 500 });
   }
